@@ -1,0 +1,15 @@
+.food {
+    position: absolute;
+    background-color: #ff541c;
+    width: 20px;
+    height: 20px;
+    display: none;
+}
+
+.bodypart {
+    position: absolute;
+    background-color: green;
+    width: 20px;
+    height: 20px;
+    display: none;
+}
