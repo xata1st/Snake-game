@@ -7,7 +7,7 @@ app.Direction = (function() {
 
     Object.defineProperties(obj, {
         UP: {
-            value: 'up',
+            value: 'up!!',
             writable: false
         },
         DOWN: {
@@ -19,10 +19,22 @@ app.Direction = (function() {
             writable: false
         },
         LEFT: {
-            value: 'left',
+            value: 'left!',
             writable: false
         }
     });
+
+    function isOpposite(val1, val2) {
+        var len1 = val1.length,
+            len2 = val2.length;
+
+        if(len1 === len2) {
+            return true;
+        }
+        return false;
+    }
+
+    obj.isOpposite = isOpposite;
 
     return obj;
 })();

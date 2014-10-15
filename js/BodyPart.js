@@ -10,8 +10,9 @@ app.BodyPart = (function() {
         parent.appendChild(this.partHtml);
 
         this.position = position;
+        this.direction = direction;
 
-        switch (direction) {
+        switch (this.direction) {
             case app.Direction.UP:
                 this.position.y -= step;
                 break;
@@ -44,12 +45,15 @@ app.BodyPart = (function() {
             this.position.x = direction.x;
             this.position.y = direction.y;
         } else {
-            switch (direction) {
+            if(!app.Direction.isOpposite(this.direction, direction)) {
+                this.direction = direction;
+            }
+            switch (this.direction) {
                 case app.Direction.UP:
-                    this.position.y += step;
+                    this.position.y -= step;
                     break;
                 case app.Direction.DOWN:
-                    this.position.y -= step;
+                    this.position.y += step;
                     break;
                 case app.Direction.RIGHT:
                     this.position.x += step;

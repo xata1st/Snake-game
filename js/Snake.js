@@ -14,7 +14,7 @@ app.Snake = (function() {
         alive = true,
         interval = null,
         step = 20,
-        timeInterval = 1000,
+        timeInterval = 200,
         snakeHtml = document.createElement('div');
 
     function init() {
@@ -71,11 +71,6 @@ app.Snake = (function() {
         if(alive) {
             hide();
 
-            for(i = 0; i < length; i+=1) {
-                console.log(body[i].getPosition());
-            }
-
-
             for(i = length - 1; i > 0; i-=1) {
                 body[i].setPosition(body[i - 1].getPosition());
             }
@@ -118,19 +113,21 @@ app.Snake = (function() {
     }
 
     function hide() {
-        var length = body.length,
+        /*var length = body.length,
             i;
         for(i = 0; i < length; i+=1) {
             body[i].hide();
-        }
+        }*/
+        snakeHtml.style.display = 'none';
     }
 
     function show() {
-        var length = body.length,
+        /*var length = body.length,
             i;
         for(i = 0; i < length; i+=1) {
             body[i].show();
-        }
+        }*/
+        snakeHtml.style.display = 'block';
     }
 
     function setParent(parent) {
@@ -138,7 +135,6 @@ app.Snake = (function() {
     }
 
     that.eat = eat;
-    that.changeDirection = changeDirection;
     that.setX = setX;
     that.setY = setY;
     that.setDirection = setDirection;
