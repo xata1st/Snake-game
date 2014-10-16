@@ -19,6 +19,7 @@ window.onload = function() {
 
     snake.setParent(container);
     snake.setDirection(app.Direction.LEFT);
+    snake.setFood(food);
 
     //snake.init();
 
@@ -31,24 +32,24 @@ window.onload = function() {
     document.addEventListener('keyup', function(evt) {
         var key = evt.keyCode;
 
-        console.log(evt);
-        console.log('keyup');
+        //console.log(evt);
+        //console.log('keyup');
 
         if(key === 38 || key === 87) {
             //up
-            console.log(app.Direction.UP);
+            //console.log(app.Direction.UP);
             snake.setDirection(app.Direction.UP);
         } else if(key === 37 || key === 83) {
             //left
-            console.log(app.Direction.LEFT);
+            //console.log(app.Direction.LEFT);
             snake.setDirection(app.Direction.LEFT);
         } else if(key === 40 || key === 65) {
             //down
-            console.log(app.Direction.DOWN);
+            //console.log(app.Direction.DOWN);
             snake.setDirection(app.Direction.DOWN);
         } else if(key === 39 || key === 68) {
             //right
-            console.log(app.Direction.RIGHT);
+            //console.log(app.Direction.RIGHT);
             snake.setDirection(app.Direction.RIGHT);
         }
     });

@@ -14,7 +14,10 @@ app.Snake = (function() {
         alive = true,
         interval = null,
         step = 20,
-        timeInterval = 200,
+        timeInterval = 1000,
+        canSetDirection = true,
+        food = null,
+        head,
         snakeHtml = document.createElement('div');
 
     function init() {
@@ -26,16 +29,24 @@ app.Snake = (function() {
             body.push(new app.BodyPart(direction, step * i, new app.Point(x, y), snakeHtml));
         }
 
+        head = body[0];
+
         show();
     }
 
-    function eat(food) {
+    function doEat() {
         var calories = food.getCalories(),
-            bodyElem,
+            lastBodyElem,
+            lastPos,
             i;
 
+        console.log('eating');
+
         for(i = 0; i < calories; i+=1) {
-            body.push(new app.BodyPart(direction, step, body[body.length - 1].getPosition(), snakeHtml));
+            lastBodyElem =  body[body.length - 1];
+            lastPos = lastBodyElem.getPosition();
+
+            body.push(new app.BodyPart(lastBodyElem.getDirection(), step, new app.Point(lastPos.x, lastPos.y), snakeHtml));
 
             points += 1;
 
@@ -43,10 +54,17 @@ app.Snake = (function() {
                 speed += 1;
             }
         }
+
+        food.move();
     }
 
-    function changeDirection(value) {
-        direction = value;
+    function eat() {
+        var headPos = head.getPosition(),
+            foodPos = food.getPosition();
+
+        if(headPos.x === foodPos.x && headPos.y === foodPos.y) {
+            doEat();
+        }
     }
 
     function setX(value) {
@@ -58,7 +76,10 @@ app.Snake = (function() {
     }
 
     function setDirection(value) {
-        direction = value;
+        if(canSetDirection) {
+            direction = value;
+            canSetDirection = false;
+        }
     }
 
     function setSpeed(value) {
@@ -69,14 +90,21 @@ app.Snake = (function() {
         var length = body.length,
             i;
         if(alive) {
-            hide();
+            if(canMove()) {
+                hide();
 
-            for(i = length - 1; i > 0; i-=1) {
-                body[i].setPosition(body[i - 1].getPosition());
+                for(i = length - 1; i > 0; i-=1) {
+                    body[i].setPosition(body[i - 1].getPosition());
+                    body[i].setDirection(body[i - 1].getDirection());
+                }
+                head.setPosition(direction, step);
+
+                show();
+
+                doEat();
+
+                canSetDirection = true;
             }
-            body[0].setPosition(direction, step);
-
-            show();
         }
     }
 
@@ -112,26 +140,35 @@ app.Snake = (function() {
         step = value;
     }
 
+    function setFood(value) {
+        food = value;
+    }
+
     function hide() {
-        /*var length = body.length,
-            i;
-        for(i = 0; i < length; i+=1) {
-            body[i].hide();
-        }*/
         snakeHtml.style.display = 'none';
     }
 
     function show() {
-        /*var length = body.length,
-            i;
-        for(i = 0; i < length; i+=1) {
-            body[i].show();
-        }*/
         snakeHtml.style.display = 'block';
     }
 
     function setParent(parent) {
         parent.appendChild(snakeHtml);
+    }
+
+    function canMove() {
+        var i,
+            length = body.length,
+            headX = head.getPosition().x,
+            headY = head.getPosition().y;
+
+        for(i = 4; i < length; i+=1) {
+            if(headX === body[i].getPosition().x && headY === body[i].getPosition().y) {
+                console.log('DEAD');
+                return false;
+            }
+        }
+        return true;
     }
 
     that.eat = eat;
@@ -146,6 +183,7 @@ app.Snake = (function() {
     that.setParent = setParent;
     that.move = move;
     that.init = init;
+    that.setFood = setFood;
 
     return that;
 })();

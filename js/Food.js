@@ -5,7 +5,7 @@
 app.Food = (function() {
 
     var that = {},
-        calories,
+        calories = 1,
         position,
         foodHtml = document.createElement('div');
 
@@ -13,6 +13,10 @@ app.Food = (function() {
 
     function getCalories() {
         return calories;
+    }
+
+    function setCalories(value) {
+        calories = value;
     }
 
     function getPosition() {
@@ -44,10 +48,16 @@ app.Food = (function() {
         parent.appendChild(foodHtml);
     }
 
+    function move() {
+
+    }
+
     that.getCalories = getCalories;
+    that.setCalories = setCalories;
     that.getPosition = getPosition;
     that.setPosition = setPosition;
     that.setParent = setParent;
+    that.move = move;
 
     return that;
 })();

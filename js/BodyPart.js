@@ -81,5 +81,13 @@ app.BodyPart = (function() {
         //this.show();
     };
 
+    BodyPart.prototype.getDirection = function() {
+        return this.direction;
+    };
+
+    BodyPart.prototype.setDirection = function(value) {
+        this.direction = value;
+    };
+
     return BodyPart;
 })();
