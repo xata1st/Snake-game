@@ -8,7 +8,9 @@ window.onload = function() {
     console.log('start');
 
     var food = app.Food,
-        container = document.getElementById('container');
+        container = document.getElementById('container'),
+		field = new app.Field(container);
+		
 
     food.setParent(container);
     food.setPosition(new app.Point(200, 200));
@@ -25,7 +27,7 @@ window.onload = function() {
 
     //snake.move();
 
-    snake.start();
+    //snake.start();
     //snake.stop();
 
 

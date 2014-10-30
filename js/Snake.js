@@ -101,7 +101,8 @@ app.Snake = (function() {
 
                 show();
 
-                doEat();
+                //doEat();
+				//eat();
 
                 canSetDirection = true;
             }

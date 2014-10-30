@@ -11,5 +11,14 @@
     background-color: green;
     width: 20px;
     height: 20px;
-    display: none;
+    display: block;
+}
+
+.field {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 300px;
+	width: 500px;
+	border: 2px solid black;
 }
