@@ -4,13 +4,11 @@
 
 var app = {};
 
-window.onload = function() {
-    console.log('start');
-
+function testSnake() {
     var food = app.Food,
         container = document.getElementById('container'),
-		field = new app.Field(container);
-		
+        field = new app.Field(container);
+
 
     food.setParent(container);
     food.setPosition(new app.Point(200, 200));
@@ -27,38 +25,47 @@ window.onload = function() {
 
     //snake.move();
 
-    //snake.start();
+    snake.start();
     //snake.stop();
 
 
     document.addEventListener('keyup', function(evt) {
         var key = evt.keyCode;
 
-        //console.log(evt);
-        //console.log('keyup');
-
         if(key === 38 || key === 87) {
-            //up
-            //console.log(app.Direction.UP);
             snake.setDirection(app.Direction.UP);
         } else if(key === 37 || key === 83) {
-            //left
-            //console.log(app.Direction.LEFT);
             snake.setDirection(app.Direction.LEFT);
         } else if(key === 40 || key === 65) {
-            //down
-            //console.log(app.Direction.DOWN);
             snake.setDirection(app.Direction.DOWN);
         } else if(key === 39 || key === 68) {
-            //right
-            //console.log(app.Direction.RIGHT);
             snake.setDirection(app.Direction.RIGHT);
+        } else if(key === 13) {
+            snake.stop();
         }
     });
 
+}
+
+window.onload = function() {
     //testIsOpposite();
+
+    testFood();
 };
 
+
+function testFood() {
+    var food = app.Food(),
+        field = app.Field(document.getElementById('container'), 100, 100, 400, 400);
+
+
+    food.init({
+        calories: 1,
+        parent: field.getHTML()
+    });
+
+    food.setPosition(field.getRandomPosition());
+}
 
 function testIsOpposite() {
     var d = app.Direction;

@@ -2,7 +2,7 @@
  * Created by xata on 13.10.2014.
  */
 
-app.Food = (function() {
+app.Food = function() {
 
     var that = {},
         calories = 1,
@@ -23,17 +23,21 @@ app.Food = (function() {
         return position;
     }
 
-    function setPosition(value) {
-        position = value;
-
-        hide();
-        changePosition();
-        show();
+    function setDomPosition() {
+        foodHtml.style.left = position.x + 'px';
+        foodHtml.style.top = position.y + 'px';
     }
 
     function changePosition() {
-        foodHtml.style.left = position.x + 'px';
-        foodHtml.style.top = position.y + 'px';
+        hide();
+        setDomPosition();
+        show();
+    }
+
+    function setPosition(value) {
+        position = value;
+
+        changePosition();
     }
 
     function show() {
@@ -48,16 +52,17 @@ app.Food = (function() {
         parent.appendChild(foodHtml);
     }
 
-    function move() {
-
+    function init(param) {
+        setCalories(param.calories);
+        setParent(param.parent);
     }
 
     that.getCalories = getCalories;
-    that.setCalories = setCalories;
     that.getPosition = getPosition;
     that.setPosition = setPosition;
-    that.setParent = setParent;
-    that.move = move;
+    that.init = init;
+    //that.setCalories = setCalories;
+    //that.setParent = setParent;
 
     return that;
-})();
+};

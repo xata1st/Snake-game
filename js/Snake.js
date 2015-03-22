@@ -98,12 +98,7 @@ app.Snake = (function() {
                     body[i].setDirection(body[i - 1].getDirection());
                 }
                 head.setPosition(direction, step);
-
                 show();
-
-                //doEat();
-				//eat();
-
                 canSetDirection = true;
             }
         }
@@ -172,6 +167,10 @@ app.Snake = (function() {
         return true;
     }
 
+    function getPosition() {
+        return head.getPosition();
+    }
+
     that.eat = eat;
     that.setX = setX;
     that.setY = setY;
@@ -184,7 +183,7 @@ app.Snake = (function() {
     that.setParent = setParent;
     that.move = move;
     that.init = init;
-    that.setFood = setFood;
+    that.getPosition = getPosition;
 
     return that;
 })();

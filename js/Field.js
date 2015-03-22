@@ -33,11 +33,21 @@ app.Field = (function() {
 	function getLeft() {
 		return x;
 	}
+
+    function getRandomPosition() {
+        return new app.Point(Lib.getRandomInt(x, width), Lib.getRandomInt(y, height));
+    }
+
+    function getHTML() {
+        return html;
+    }
 	
 	that.getTop = getTop;
 	that.getRight = getRight;
 	that.getBottom = getBottom;
 	that.getLeft = getLeft;
+    that.getRandomPosition = getRandomPosition;
+    that.getHTML = getHTML;
 	
 	function create(parent, ax, ay, awidth, aheight) {
 		init();
