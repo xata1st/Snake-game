@@ -33,16 +33,40 @@ app.Food = function() {
         foodHtml.style.top = position.y + 'px';
     }
 
-    function changePosition() {
+    function redraw() {
         hide();
         setDomPosition();
         show();
     }
 
-    function setPosition(value) {
-        position = value;
+    function countPosition(value) {
+        var modX = value.x % width,
+            modY = value.y % height,
+            x,
+            y;
 
-        changePosition();
+        if(modX) {
+            if(modX > width / 2) {
+                x = value.x + (width - modX);
+            } else {
+                x = value.x - modX;
+            }
+        }
+
+        if(modY) {
+            if(modY > height / 2) {
+                y = value.y + (height - modY);
+            } else {
+                y = value.y - modY;
+            }
+        }
+
+        return new app.Point(x, y);
+    }
+
+    function setPosition(value) {
+        position = countPosition(value);
+        redraw();
 
         evented.fire('food:position:change', position);
     }

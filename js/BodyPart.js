@@ -5,6 +5,7 @@
 var app = app || {};
 
 app.BodyPart = (function() {
+    var d = app.Direction;
 
     function BodyPart(direction, step, position, parent) {
         this.partHtml = document.createElement('div');
@@ -16,16 +17,16 @@ app.BodyPart = (function() {
         this.direction = direction;
 
         switch (this.direction) {
-            case app.Direction.UP:
+            case d.UP:
                 this.position.y -= step;
                 break;
-            case app.Direction.DOWN:
+            case d.DOWN:
                 this.position.y += step;
                 break;
-            case app.Direction.RIGHT:
+            case d.RIGHT:
                 this.position.x -= step;
                 break;
-            case app.Direction.LEFT:
+            case d.LEFT:
                 this.position.x += step;
                 break;
             default: break;
@@ -48,20 +49,20 @@ app.BodyPart = (function() {
             this.position.x = direction.x;
             this.position.y = direction.y;
         } else {
-            if(!app.Direction.isOpposite(this.direction, direction)) {
+            if(!d.isOpposite(this.direction, direction)) {
                 this.direction = direction;
             }
             switch (this.direction) {
-                case app.Direction.UP:
+                case d.UP:
                     this.position.y -= step;
                     break;
-                case app.Direction.DOWN:
+                case d.DOWN:
                     this.position.y += step;
                     break;
-                case app.Direction.RIGHT:
+                case d.RIGHT:
                     this.position.x += step;
                     break;
-                case app.Direction.LEFT:
+                case d.LEFT:
                     this.position.x -= step;
                     break;
                 default: break;

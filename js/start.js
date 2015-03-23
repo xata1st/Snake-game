@@ -57,7 +57,9 @@ window.onload = function() {
 function testFood() {
     var food = app.Food(),
         field = app.Field(document.getElementById('container'), 100, 100, 400, 400),
-        evented = app.Evented;
+        snake = app.Snake(),
+        evented = app.Evented,
+        d = app.Direction;
 
 
     food.init({
@@ -66,12 +68,39 @@ function testFood() {
         evented: evented
     });
 
+    snake.init({
+        parent: field.getHTML(),
+        direction: d.LEFT,
+        evented: evented
+    });
+
     evented.subscribe('food:position:change', function(position) {
         console.dir(position);
     });
 
+    evented.subscribe('snake:move:step', function(position) {
+        console.dir(position);
+    });
 
     food.setPosition(field.getRandomPosition({width: food.getWidth(), height: food.getHeight()}));
+
+    snake.start();
+
+    document.addEventListener('keyup', function(evt) {
+        var key = evt.keyCode;
+
+        if(key === 38 || key === 87) {
+            snake.setDirection(app.Direction.UP);
+        } else if(key === 37 || key === 83) {
+            snake.setDirection(app.Direction.LEFT);
+        } else if(key === 40 || key === 65) {
+            snake.setDirection(app.Direction.DOWN);
+        } else if(key === 39 || key === 68) {
+            snake.setDirection(app.Direction.RIGHT);
+        } else if(key === 13) {
+            snake.stop();
+        }
+    });
 }
 
 function testIsOpposite() {

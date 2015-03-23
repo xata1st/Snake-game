@@ -4,7 +4,7 @@
 
 var app = app || {};
 
-app.Snake = (function() {
+app.Snake = function() {
     var speed = 1,
         points = 3,
         body = [],
@@ -20,9 +20,19 @@ app.Snake = (function() {
         canSetDirection = true,
         food = null,
         head,
+        evented,
         snakeHtml = document.createElement('div');
 
-    function init() {
+    function init(param) {
+        setParent(param.parent);
+        setDirection(param.direction);
+        setEvented(param.evented);
+
+        buildSnake();
+        show();
+    }
+
+    function buildSnake() {
         var i;
 
         body.push(new app.BodyPart(direction, 0, new app.Point(x, y), snakeHtml));
@@ -32,8 +42,10 @@ app.Snake = (function() {
         }
 
         head = body[0];
+    }
 
-        show();
+    function setEvented(value) {
+        evented = value;
     }
 
     function doEat() {
@@ -57,7 +69,7 @@ app.Snake = (function() {
             }
         }
 
-        food.move();
+        //food.move();
     }
 
     function eat() {
@@ -88,20 +100,30 @@ app.Snake = (function() {
         speed = value;
     }
 
-    function move() {
+    function doStep() {
         var length = body.length,
             i;
+
+        for(i = length - 1; i > 0; i-=1) {
+            body[i].setPosition(body[i - 1].getPosition());
+            body[i].setDirection(body[i - 1].getDirection());
+        }
+        head.setPosition(direction, step);
+    }
+
+    function redrawStep() {
+        hide();
+        doStep();
+        show();
+    }
+
+    function move() {
         if(alive) {
             if(canMove()) {
-                hide();
-
-                for(i = length - 1; i > 0; i-=1) {
-                    body[i].setPosition(body[i - 1].getPosition());
-                    body[i].setDirection(body[i - 1].getDirection());
-                }
-                head.setPosition(direction, step);
-                show();
+                redrawStep();
                 canSetDirection = true;
+
+                evented.fire('snake:move:step', getPosition());
             }
         }
     }
@@ -113,12 +135,11 @@ app.Snake = (function() {
     }
 
     function doBegin() {
-        init();
-
         interval = window.setInterval(function() {
-            //debugger;
             move();
         }, timeInterval / speed);
+
+        evented.fire('snake:move:start', getPosition());
     }
 
     function updateSpeed() {
@@ -128,6 +149,8 @@ app.Snake = (function() {
 
     function stop() {
         removeInterval();
+
+        evented.fire('snake:move:stop', getPosition());
     }
 
     function resume() {
@@ -182,10 +205,11 @@ app.Snake = (function() {
     that.stop = stop;
     that.resume = resume;
     that.setStep = setStep;
-    that.setParent = setParent;
+    //that.setParent = setParent;
     that.move = move;
     that.init = init;
     that.getPosition = getPosition;
+    that.setEvented = setEvented;
 
     return that;
-})();
+};
