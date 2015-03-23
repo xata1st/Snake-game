@@ -27,8 +27,10 @@ app.Evented = (function() {
         }
     };
 
-    fire = function(eventName, args) {
-        var callbackArr = events[eventName];
+    fire = function(eventName) {
+        var callbackArr = events[eventName],
+            args = Array.prototype.slice.apply(arguments, [1, arguments.length]);
+
         if(callbackArr) {
             callbackArr.forEach(function(item) {
                 item.callback.apply(item.thisArg, args);

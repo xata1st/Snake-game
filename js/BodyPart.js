@@ -1,6 +1,9 @@
 /**
  * Created by xata on 13.10.2014.
  */
+
+var app = app || {};
+
 app.BodyPart = (function() {
 
     function BodyPart(direction, step, position, parent) {

@@ -2,7 +2,7 @@
  * Created by xata on 13.10.2014.
  */
 
-var app = {};
+var app = app || {};
 
 function testSnake() {
     var food = app.Food,
@@ -56,15 +56,22 @@ window.onload = function() {
 
 function testFood() {
     var food = app.Food(),
-        field = app.Field(document.getElementById('container'), 100, 100, 400, 400);
+        field = app.Field(document.getElementById('container'), 100, 100, 400, 400),
+        evented = app.Evented;
 
 
     food.init({
         calories: 1,
-        parent: field.getHTML()
+        parent: field.getHTML(),
+        evented: evented
     });
 
-    food.setPosition(field.getRandomPosition());
+    evented.subscribe('food:position:change', function(position) {
+        console.dir(position);
+    });
+
+
+    food.setPosition(field.getRandomPosition({width: food.getWidth(), height: food.getHeight()}));
 }
 
 function testIsOpposite() {

@@ -2,6 +2,8 @@
  * Created by xata on 13.10.2014.
  */
 
+var app = app || {};
+
 app.Field = (function() {
 
 	var that = {},
@@ -34,8 +36,8 @@ app.Field = (function() {
 		return x;
 	}
 
-    function getRandomPosition() {
-        return new app.Point(Lib.getRandomInt(x, width), Lib.getRandomInt(y, height));
+    function getRandomPosition(param) {
+        return new app.Point(Lib.getRandomInt(0, width - param.width), Lib.getRandomInt(0, height - param.height));
     }
 
     function getHTML() {

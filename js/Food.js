@@ -2,12 +2,17 @@
  * Created by xata on 13.10.2014.
  */
 
+var app = app || {};
+
 app.Food = function() {
 
     var that = {},
         calories = 1,
         position,
-        foodHtml = document.createElement('div');
+        foodHtml = document.createElement('div'),
+        width = 20,
+        height = 20,
+        evented;
 
     foodHtml.className = 'food';
 
@@ -38,6 +43,8 @@ app.Food = function() {
         position = value;
 
         changePosition();
+
+        evented.fire('food:position:change', position);
     }
 
     function show() {
@@ -52,11 +59,26 @@ app.Food = function() {
         parent.appendChild(foodHtml);
     }
 
+    function getWidth() {
+        return width;
+    }
+
+    function getHeight() {
+        return height;
+    }
+
+    function setEvented(value) {
+        evented = value;
+    }
+
     function init(param) {
         setCalories(param.calories);
         setParent(param.parent);
+        setEvented(param.evented);
     }
 
+    that.getWidth = getWidth;
+    that.getHeight = getHeight;
     that.getCalories = getCalories;
     that.getPosition = getPosition;
     that.setPosition = setPosition;

@@ -2,6 +2,8 @@
  * Created by xata on 13.10.2014.
  */
 
+var app = app || {};
+
 app.Snake = (function() {
     var speed = 1,
         points = 3,
